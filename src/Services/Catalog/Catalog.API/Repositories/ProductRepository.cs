@@ -42,9 +42,13 @@ namespace Catalog.API.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Product>> GetProductByName(string name)
+        public async Task<IEnumerable<Product>> GetProductByName(string name)
         {
-            throw new NotImplementedException();
+            FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Name, name);
+            return await _context
+                .Products
+                .Find(filter)
+                .ToListAsync();
         }
 
         public Task<bool> UpdateProduct(Product product)
